@@ -1,7 +1,9 @@
 // AuthPage.js
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase"; // Firebase configuration
+import { auth } from "./firebase";
+
+ // Firebase configuration
 
 // Inline CSS styles for the page and components
 const styles = {
@@ -44,6 +46,7 @@ const styles = {
     padding: "10px",
     fontSize: "16px",
     border: "1px solid #ddd",
+    color: "#333",
     borderRadius: "4px",
   },
   button: {

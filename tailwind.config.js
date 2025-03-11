@@ -1,13 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class', // Enable dark mode using class strategy
   theme: {
-    extend: {navyBlue: "#1e2a47",
-      "navyBlue-light": "#28365a",boxShadow: {
-        glow: '0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.4)',
+    extend: {
+      // Add any customizations here
+    },
   },
-  plugins: [require('tailwindcss-textshadow'),],
+  plugins: [],
 }
-
-
-}}

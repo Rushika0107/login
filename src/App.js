@@ -1,5 +1,5 @@
 import React from "react";
-import AuthPage from "./Authpage.js";
+import AuthPage from "./Authpage";
 
 function App() {
   return (
