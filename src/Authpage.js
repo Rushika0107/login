@@ -1,6 +1,9 @@
+// AuthPage.js
 import React, { useState } from "react";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebase"; // Firebase configuration
 
-// Inline style objects for the entire page and components
+// Inline CSS styles for the page and components
 const styles = {
   container: {
     display: "flex",
@@ -29,7 +32,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     textAlign: "left",
-    color: "#333",
     marginBottom: "15px",
   },
   label: {
@@ -72,15 +74,15 @@ function Login({ toggleAuth }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic authentication logic (for demo purposes)
-    if (email === "test@example.com" && password === "password123") {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
-      // Redirect or set authentication state as needed
-    } else {
-      setError("Invalid email or password");
+      // You can redirect or set user state here.
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -126,24 +128,26 @@ function Login({ toggleAuth }) {
 }
 
 function Signup({ toggleAuth }) {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation: check if passwords match
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    // In a real app, send a request to your backend here.
-    alert("Sign up successful!");
-    // Optionally clear the form or redirect the user
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Sign up successful!");
+      // Optionally redirect or clear the form
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -151,17 +155,6 @@ function Signup({ toggleAuth }) {
       <h2 style={styles.header}>Sign Up</h2>
       {error && <p style={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Username:</label>
-          <input
-            type="text"
-            style={styles.input}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
-            required
-          />
-        </div>
         <div style={styles.inputGroup}>
           <label style={styles.label}>Email:</label>
           <input
@@ -211,7 +204,6 @@ function Signup({ toggleAuth }) {
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-
   const toggleAuth = () => setIsLogin(!isLogin);
 
   return (
